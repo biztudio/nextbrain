@@ -3,6 +3,7 @@ export default () => (
              body{
                  background:green;
                  color:white;
+                 font-family: "Microsoft YaHei","黑体","宋体",'Arial',sans-serif
              }
              
               .navigationlink{
