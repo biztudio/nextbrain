@@ -1,5 +1,9 @@
+import Layout from '../components/Layout'
+
 export default () => (
-    <div>
-        Hello, Next Brain!
-    </div>
+    <Layout>
+        <div>
+            Hello, Next Brain!
+        </div>
+    </Layout>
 )

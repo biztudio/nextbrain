@@ -1,17 +1,16 @@
 import Link from 'next/link'
-
-const linkStyle = {
-  marginRight: 15
-}
+import GlobalStyle from '../components/GlobalStyle';
 
 const PageHeader = () => (
     <div>
         <Link href="/">
-          <a style={linkStyle}>Home</a>
+          <a className="navigationlink">Home</a>
         </Link>
         <Link href="/about">
-          <a style={linkStyle}>About</a>
+          <a className="navigationlink">About</a>
         </Link>
+
+        <GlobalStyle />
     </div>
 )
 
