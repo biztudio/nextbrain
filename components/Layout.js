@@ -1,5 +1,6 @@
+import DocHead from './DocHead'
 import PageHeader from './PageHeader';
-import GlobalStyle from '../components/GlobalStyle';
+import GlobalStyle from './GlobalStyle';
 
 const layoutStyle = {
   margin: 20,
@@ -9,7 +10,11 @@ const layoutStyle = {
 
 const Layout = (props) => (
   <div style={layoutStyle}>
-    <PageHeader />
+
+    <DocHead title={props.title}/>
+
+    <PageHeader  />
+
     {props.children}
     
    

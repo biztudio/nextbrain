@@ -3,7 +3,7 @@ import Layout from '../components/Layout'
 
 export default () => (
     
-    <Layout>
+    <Layout   title="关于 Nextbrain">
 
         <div className="markdown">
             <Markdown source={`

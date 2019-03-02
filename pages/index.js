@@ -1,9 +1,9 @@
 import Layout from '../components/Layout'
 
 export default () => (
-    <Layout>
+    <Layout  title="欢迎来到 Nextbrain">
         <div>
-            Hello, Next Brain!
+            Hello, Nextbrain!
         </div>
     </Layout>
 )

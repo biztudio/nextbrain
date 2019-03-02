@@ -3,7 +3,7 @@ import Sudoku from '../components/Sudoku';
 
 export default () => (
     
-    <Layout>
+    <Layout   title="Nextbrain - 数独">
 
         <Sudoku />
 

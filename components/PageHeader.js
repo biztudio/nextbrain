@@ -1,7 +1,9 @@
 import Link from 'next/link'
 
-const PageHeader = () => (
+
+const PageHeader = (props) => (
     <div>
+
         <Link href="/">
           <a className="navigationlink">首页</a>
         </Link>
