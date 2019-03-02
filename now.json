@@ -4,6 +4,7 @@
     "builds": [{ "src": "./app/next.config.js", "use": "@now/next" }],
 	"alias": ["nextbrain.now.sh"],
 	"github": {
-		"enabled": true
+		"enabled": true,
+		"silent": true
 	  }
 }
