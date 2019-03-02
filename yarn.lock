@@ -4100,6 +4100,11 @@ randomfill@^1.0.3:
     randombytes "^2.0.5"
     safe-buffer "^5.1.0"
 
+randomlibiz@^1.0.0:
+  version "1.0.0"
+  resolved "http://registry.npm.taobao.org/randomlibiz/download/randomlibiz-1.0.0.tgz#d5eb2e7a00de09d2f3a06a4bc8ddd9bd0abb4b47"
+  integrity sha1-1esuegDeCdLzoGpLyN3ZvQq7S0c=
+
 range-parser@^1.0.3, range-parser@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.0.tgz#f49be6b487894ddc40dcc94a322f611092e00d5e"
@@ -4857,11 +4862,6 @@ stylis@3.5.4:
   version "3.5.4"
   resolved "https://registry.yarnpkg.com/stylis/-/stylis-3.5.4.tgz#f665f25f5e299cf3d64654ab949a57c768b73fbe"
   integrity sha512-8/3pSmthWM7lsPBKv7NXkzn2Uc9W7NotcwGNpJaa3k7WMM1XDCA4MgT5k/8BIexd5ydZdboXtU90XH9Ec4Bv/Q==
-
-sudokukit@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/sudokukit/-/sudokukit-1.0.1.tgz#ab4e074b9243d4e17db48ce5799a427e4d3e6fb0"
-  integrity sha512-7s/zJw7QswI5lNjxZ6+lMKsqemJ+0WBioRRzyML0E9qE8R/ELrh49w7LwtYwijeYRmhUzKOt1bO0lz9UlUBH+A==
 
 supports-color@^2.0.0:
   version "2.0.0"
