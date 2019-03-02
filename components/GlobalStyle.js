@@ -6,18 +6,13 @@ export default () => (
                  font-family: "Microsoft YaHei","黑体","宋体",'Arial',sans-serif;
              }
              
-              .navigationlink{
-                margin-right: 15px;
-              }
-
               .markdown {
                 font-family: 'Arial';
                 color: white;
               }
 
               .markdown a {
-                text-decoration: none;
-                color: blue;
+                
               }
 
               .markdown a:hover {

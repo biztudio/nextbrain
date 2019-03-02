@@ -1,16 +1,29 @@
 import Link from 'next/link'
-import GlobalStyle from '../components/GlobalStyle';
 
 const PageHeader = () => (
     <div>
         <Link href="/">
-          <a className="navigationlink">Home</a>
+          <a className="navigationlink">首页</a>
+        </Link>
+        <Link href="/sudoku">
+          <a className="navigationlink">数独</a>
         </Link>
         <Link href="/about">
-          <a className="navigationlink">About</a>
+          <a className="navigationlink">关于</a>
         </Link>
 
-        <GlobalStyle />
+        <style jsx>{`
+          div{
+            margin-bottom:20px;
+          }
+
+          .navigationlink{
+                margin-right: 15px;
+                text-decoration: none;
+                color: orange;
+          }
+        `}
+        </style>
     </div>
 )
 
