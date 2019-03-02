@@ -1,0 +1,9 @@
+{
+    "name": "nextbrain",
+    "version": 2,
+    "builds": [{ "src": "./app/next.config.js", "use": "@now/next" }],
+	"alias": ["nextbrain.now.sh"],
+	"github": {
+		"enabled": true
+	  }
+}
