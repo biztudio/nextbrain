@@ -1,15 +1,12 @@
 import sudokukit from '../middleware/sudokukit';
 
-const groupsize = 9;
 const getSudokuData = level => {
     
     let puzzle = sudokukit.getSudokuPuzzle(level).SudokuPuzzle//level is between 2 and 6
-    let groupCount = puzzle.length / groupsize;
     let sudokuGroups = [];
    
     let cellsInGroup = [];
     let groupIndex = 0;
-    //TODO: recaculate the sudoku push logic
     
     let startIndes = sudokukit.getStartIndesInGrids()
     for(let gi_index of startIndes){
@@ -34,7 +31,20 @@ const renderSudoku = (level) => {
 
                 { getSudokuData(level).map(sg => 
                     <div  className='sudokugroup' key={sg.index}> 
-                        {sg.data.map(sd => <div className='sudokudisplay' key={sd.index}>{sd.display}</div>)}
+                        {sg.data.map(sd => 
+
+                            {
+                                if(sd.display > 0){
+                                    return <div className='sudokudisplay' key={sd.index}>{sd.display}</div>
+                                }
+                                else{
+                                    return <div className='sudokudisplay' key={sd.index}>
+                                        <input className='sudokuanswer' autoComplete='off' type='text' maxLength='1'/>
+                                    </div>
+                                }
+                            }
+
+                        )}
                     </div>) }
 
             </div>       
@@ -44,18 +54,17 @@ const renderSudoku = (level) => {
                     flex-direction:row;
                     flex-wrap: wrap;
                     justify-content:space-around;
-                    background:#FFF2E2;
+                    background:#000;
                     width:342px;
                     height:342px;
-                    margin:30px;
+                    margin:10px;
                 }
                 .sudokugroup{
                     display:flex;
                     flex-direction:row;
                     flex-wrap: wrap;
                     justify-content:space-around;
-                    
-                    background:#FFF2E2;
+                    background:#000;
                     font-size:32px;
                     width: 111px;
                     height: 111px;
@@ -66,12 +75,25 @@ const renderSudoku = (level) => {
                     height:36px;
                     display:flex;
                     justify-content:center;
-                    background:#000;
+                    background:#E3EDCD;
+                    color:#000
                 }
                 .sudokuanswer{
+                    background:#E3EDCD;
                     color: purple;
+                    width:26px;
+                    height:34px;
+                    margin-left:8px;
+                    border:0;
+                    font-size:32px;
+                    font-family: "Microsoft YaHei","黑体","宋体",'Arial',sans-serif;
                 }
                 .sudokuhint{
+                    width:36px;
+                    height:36px;
+                    display:flex;
+                    justify-content:center;
+                    background:#E3EDCD;
                     color: gray;
                 }
             `}</style>
@@ -97,7 +119,7 @@ const SudokuComponent = (props) => {
                 flex-direction:row;
                 flex-wrap: wrap;
                 justify-content:space-around;
-                width:90%;
+                width:95%;
                 
             }
         `}</style>

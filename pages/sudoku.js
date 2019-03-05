@@ -6,7 +6,7 @@ const Sudoku = (props) => (
     
     <Layout   title="Nextbrain - 数独">
 
-        <SudokuComponent level='2' />
+        <SudokuComponent level='3' count='6'/>
 
     </Layout>
     
