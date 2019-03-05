@@ -9,6 +9,9 @@ const getSudokuData = level => {
    
     let cellsInGroup = [];
     let groupIndex = 0;
+    //TODO: recaculate the sudoku push logic
+    //sudokukit.getIndexListInGrid(index)
+    
     for(let p of puzzle){
        
         cellsInGroup.push(p);
@@ -18,9 +21,10 @@ const getSudokuData = level => {
             cellsInGroup = [];
             groupIndex++;
         }
-
     }
 
+    console.log(puzzle)
+    console.log(sudokuGroups)
     return sudokuGroups;
 }
 
@@ -80,7 +84,7 @@ const renderSudoku = (level) => {
 
 const SudokuComponent = (props) => {
     let sudosuks = []
-    for(let sindex = 0; sindex < props.count; sindex++)
+    for(let sindex = 0; sindex < (props.count||1); sindex++)
         sudosuks.push(renderSudoku(props.level));
     return (
         <div>

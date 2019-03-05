@@ -296,21 +296,24 @@ export default{
     getSudokuPuzzle:function(level = 3){        
         let sudoku = this.getSudokuSourceData()
         let sudokuPuzzle = []
-        let index = 0
+        let sindex = 0
         for(let sudokuitem of sudoku){
             sudokuPuzzle.push({
-                index:index,
+                index:sindex,
                 value:sudokuitem,
                 display:sudokuitem
             });
-            index++
+            sindex++
         }
         let grid_init_indes = this.getStartIndesInGrids(sudoku)
         for(let grid_init_index of grid_init_indes){
             let grid_indes = this.getIndexListInGrid(grid_init_index)
             let hide_postions = this.getHidePositionInGrid(level)
+            //console.log(`hide_postions: ${hide_postions}`)
+            //console.log(`grid_indes: ${grid_indes}`)
             for(let lucky_pos of hide_postions){
                 let hide_index = grid_indes[lucky_pos]
+                //console.log(hide_index)
                 sudokuPuzzle[hide_index].display = 0
             }
         }
