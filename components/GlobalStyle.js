@@ -3,11 +3,11 @@ export default () => (
              body{
                  background:green;
                  color:white;
-                 font-family: "Microsoft YaHei","黑体","宋体",'Arial',sans-serif;
+                 font-family: "黑体","宋体",'Arial',sans-serif;
              }
              
               .markdown {
-                font-family: 'Arial';
+                font-family: "黑体","宋体",'Arial',sans-serif;
                 color: white;
               }
 

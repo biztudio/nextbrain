@@ -23,11 +23,11 @@ const getSudokuData = level => {
 }
 
 //
-const renderSudoku = (level) => {
-
+const renderSudoku = (level, keyrefer) => {
+    keyrefer = keyrefer || 1;
     return(
         <div>
-            <div className='sudokucontainer'>
+            <div className='sudokucontainer' key={keyrefer}>
 
                 { getSudokuData(level).map(sg => 
                     <div  className='sudokugroup' key={sg.index}> 
@@ -86,7 +86,7 @@ const renderSudoku = (level) => {
                     margin-left:8px;
                     border:0;
                     font-size:32px;
-                    font-family: "Microsoft YaHei","黑体","宋体",'Arial',sans-serif;
+                    font-family: "黑体","宋体",'Arial',sans-serif;
                 }
                 .sudokuhint{
                     width:36px;
@@ -105,7 +105,7 @@ const SudokuComponent = (props) => {
     let sudosuks = []
     let count = (props.count||1);
     for(let sindex = 0; sindex < count; sindex++)
-        sudosuks.push(renderSudoku(props.level));
+        sudosuks.push(renderSudoku(props.level, sindex));
     return (
         <div>
         <div className='sudokupage'>
