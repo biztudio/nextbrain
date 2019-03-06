@@ -39,8 +39,8 @@ const renderSudoku = (level, keyrefer) => {
                                 }
                                 else{
                                     return <div className='sudokudisplay' key={sd.index}>
-                                        <input className='sudokuanswer' autoComplete='off' type='text' maxLength='1'/>
-                                    </div>
+                                                <input className='sudokuanswer' autoComplete='off' type='text' maxLength='1'/>
+                                            </div>
                                 }
                             }
 
@@ -104,15 +104,15 @@ const renderSudoku = (level, keyrefer) => {
 const SudokuComponent = (props) => {
     let sudosuks = []
     let count = (props.count||1);
+    
     for(let sindex = 0; sindex < count; sindex++)
-        sudosuks.push(renderSudoku(props.level, sindex));
+        sudosuks.push(<div key={sindex}>{renderSudoku(props.level, sindex)}</div>);
+
     return (
         <div>
-        <div className='sudokupage'>
-            
-            { sudosuks }
-           
-        </div>
+            <div className='sudokupage'>
+                { sudosuks }
+            </div>
         <style jsx>{`
             .sudokupage{
                 display:flex;

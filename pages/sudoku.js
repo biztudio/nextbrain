@@ -18,7 +18,7 @@ const Sudoku = (props) => (
             <label >组数</label>
         </div>
 
-        <SudokuComponent level='3' count='1'/>
+        <SudokuComponent level='3' count='3'/>
 
         <style jsx>{`
             .settingbar{
