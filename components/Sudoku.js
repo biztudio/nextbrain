@@ -1,4 +1,5 @@
 import sudokukit from '../middleware/sudokukit';
+import React, { Component } from 'react';
 
 const getSudokuData = level => {
     
@@ -101,30 +102,36 @@ const renderSudoku = (level, keyrefer) => {
 };
 
 
-const SudokuComponent = (props) => {
-    let sudosuks = []
-    let count = (props.count||1);
-    
-    for(let sindex = 0; sindex < count; sindex++)
-        sudosuks.push(<div key={sindex}>{renderSudoku(props.level, sindex)}</div>);
+export default class SudokuComponent extends Component{
+    constructor(props){
+        super(props);
+    }
 
-    return (
-        <div>
-            <div className='sudokupage'>
-                { sudosuks }
+    render () {
+        let sudosuks = []
+        let count = (this.props.count||1);
+        
+        for(let sindex = 0; sindex < count; sindex++)
+            sudosuks.push(<div key={sindex}>{renderSudoku(this.props.level, sindex)}</div>);
+
+        return (
+            <div>
+                <div className='sudokupage'>
+                    { sudosuks }
+                </div>
+            <style jsx>{`
+                .sudokupage{
+                    display:flex;
+                    flex-direction:row;
+                    flex-wrap: wrap;
+                    justify-content:space-around;
+                    width:95%;
+                    
+                }
+            `}</style>
             </div>
-        <style jsx>{`
-            .sudokupage{
-                display:flex;
-                flex-direction:row;
-                flex-wrap: wrap;
-                justify-content:space-around;
-                width:95%;
-                
-            }
-        `}</style>
-        </div>
-    )
+        )
+    }
 };
 
-export default SudokuComponent;
+//export default SudokuComponent;

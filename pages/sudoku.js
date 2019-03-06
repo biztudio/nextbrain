@@ -1,35 +1,70 @@
 import Layout from '../components/Layout';
 import SudokuComponent from '../components/Sudoku';
+import React, { Component } from 'react';
 
+export default class Sudoku extends Component{ 
+    constructor(props) {
+        super(props);
+        this.state = {
+            level:3,
+            count:1
+        };
+        this.levelChangeHandleEvent = this.levelChangeHandleEvent.bind(this);
+        this.countChangeHandleEvent = this.countChangeHandleEvent.bind(this);
+    }
 
-const Sudoku = (props) => (
+    levelChangeHandleEvent(event){
+        this.setState({level:event.target.value});//NOTE: this is an async way. We can verify it in following consoles
+        //console.log(event.target.value)
+        //console.log(this.state.level);
+    }
+
+    countChangeHandleEvent(event){
+        this.setState({count:event.target.value});//NOTE: this is an async way.
+    }
     
-    <Layout title="Nextbrain - 数独">
+    render(){
+        let groupList = [];
+        for(let index = 1; index <= 12; index++){
+            groupList.push(<option value={index} key={index}>{index} 组</option>);
+        }
+        return ( <Layout title="Nextbrain - 数独">
 
-        <div className='settingbar'>
-            <label htmlFor = 'level'>难度:  </label>
-            <select name='level' defaultValue='3'>
-                <option value="2">入门秒杀</option>
-                <option value="3">日常玩玩</option>
-                <option value="4">刻意训练</option>
-                <option value="5">琢磨片刻</option>
-                <option value="6">偶然挑战</option>
-            </select>
-            <label >组数</label>
-        </div>
+                    <div className='settingbar'>
+                        <label className='settinglabel' htmlFor = 'level'>难度:  </label>
+                        <select className='settinginput' name='level' value={this.state.level} onChange={this.levelChangeHandleEvent}>
+                            <option value="2">入门秒杀</option>
+                            <option value="3">日常玩玩</option>
+                            <option value="4">刻意训练</option>
+                            <option value="5">琢磨片刻</option>
+                            <option value="6">壮胆挑战</option>
+                        </select>
+                        <label className='settinglabel' htmlFor = 'sudokucount'>组数</label>
+                        <select className='settinginput' name='sudokucount' value={this.state.count} onChange={this.countChangeHandleEvent}>
+                            { groupList }
+                        </select>
+                    </div>
 
-        <SudokuComponent level='3' count='3'/>
+                    <SudokuComponent level={this.state.level} count={this.state.count} />
 
-        <style jsx>{`
-            .settingbar{
-                display:flex;
-                justify-content:center;
-            }
-        `}</style>
+                    <style jsx>{`
+                        .settingbar{
+                            display:flex;
+                            justify-content:center;
 
-    </Layout>
+                        }
+                        .settinglabel{
+                            margin-right:20px;
+                        }
+                        .settinginput{
+                            margin-right:50px;
+                        }
+                    `}</style>
+
+                </Layout>);
     
-)
+    }
+}
 
 
 // getInitialProps works ONLY on page
@@ -44,4 +79,4 @@ Sudoku.getInitialProps = async function() {
 }
 */
 
-export default Sudoku;
+//export default Sudoku;
