@@ -38,11 +38,14 @@ export default class SudokuComponent extends Component{
         console.log('componentWillMount@SudokuComponent')
     }
 
+    //https://infoq.cn/article/2016/07/react-shouldComponentUpdate
+    /* 
     shouldComponentUpdate(nextProps,nextState){
         //写自己的逻辑判断是否需要更新组件
-        
-        return false;
+       
+        return true;
     }
+    */
 
     numeric_only(e){
         console.log(e)
@@ -152,30 +155,12 @@ export default class SudokuComponent extends Component{
 
     render () {
         let sudosuks = []
-        let count = (this.props.count||1);
         console.log('render@SudokuComponent')
-
-        for(let sindex = 0; sindex < count; sindex++)
-            sudosuks.push(<div key={sindex}>{this.renderSudoku(this.props.level, sindex)}</div>);
-
+    
         return (
             <div>
-                <div className='sudokupage'>
-                    { sudosuks }
-                </div>
-            <style jsx>{`
-                .sudokupage{
-                    display:flex;
-                    flex-direction:row;
-                    flex-wrap: wrap;
-                    justify-content:space-around;
-                    width:95%;
-                    
-                }
-            `}</style>
+                { this.renderSudoku(this.props.level) }
             </div>
         )
     }
 };
-
-//export default SudokuComponent;

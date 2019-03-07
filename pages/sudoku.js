@@ -35,6 +35,12 @@ export default class Sudoku extends Component{
             groupList.push(<option value={index} key={index}>{index} 组</option>);
         }
         console.log('render@SudokuPage')
+
+        let sudokuList = []
+        for(let sindex = 0; sindex < this.state.count;sindex++){
+            sudokuList.push(<SudokuComponent level={this.state.level} />)
+        }
+
         return ( <Layout title="Nextbrain - 数独">
 
                     <div className='settingbar'>
@@ -52,10 +58,18 @@ export default class Sudoku extends Component{
                         </select>
                         <button onClick={this.refreshHandleEvent}>再来一组</button>
                     </div>
-
-                    <SudokuComponent level={this.state.level} count={this.state.count} />
-
+                    <div className='sudokupage'>
+                        {sudokuList}
+                    </div>
                     <style jsx>{`
+                        .sudokupage{
+                            display:flex;
+                            flex-direction:row;
+                            flex-wrap: wrap;
+                            justify-content:space-around;
+                            width:95%;
+                            
+                        }
                         .settingbar{
                             display:flex;
                             justify-content:center;
