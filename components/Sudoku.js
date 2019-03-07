@@ -13,7 +13,6 @@ export default class SudokuComponent extends Component{
     }
 
     componentWillMount () { 
-        //this.setState({answerMode:false});
         console.log('componentWillMount@SudokuComponent')
         this.setState({sudokuGroups:this.getSudokuData(this.props.level)})
     }
@@ -26,7 +25,13 @@ export default class SudokuComponent extends Component{
     */
 
     numeric_only(e){
-        console.log(e)
+        console.log(e.charCode)
+        if(e.charCode >= 49 && e.charCode <= 57){
+            
+        }
+        else{
+            alert('请输入1到9之间的数字')
+        }
     }
 
     changeAnswerModeHandle(e){

@@ -16,7 +16,6 @@ export default class Sudoku extends Component{
     }
 
     getSudokuList(){
-        console.log('getSudokuList@SudokuPage')
         this.setState({sudokuList:[]}, ()=>{
             let sudokuList = [];
             for(let sindex = 0; sindex < this.state.count; sindex++){
@@ -81,7 +80,6 @@ export default class Sudoku extends Component{
                         .settingbar{
                             display:flex;
                             justify-content:center;
-
                         }
                         .settinglabel{
                             margin-right:20px;
