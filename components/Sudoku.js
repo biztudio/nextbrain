@@ -1,33 +1,12 @@
 import sudokukit from '../middleware/sudokukit';
 import React, { Component } from 'react';
 
-const getSudokuData = level => {
-    
-    let puzzle = sudokukit.getSudokuPuzzle(level).SudokuPuzzle//level is between 2 and 6
-    let sudokuGroups = [];
-   
-    let cellsInGroup = [];
-    let groupIndex = 0;
-    
-    let startIndes = sudokukit.getStartIndesInGrids()
-    for(let gi_index of startIndes){
-        let sindes = sudokukit.getIndexListInGrid(gi_index, startIndes)
-        for(let sindex of sindes){
-            cellsInGroup.push(puzzle[sindex]);
-        }
-        sudokuGroups.push({data:cellsInGroup.slice(0), index:groupIndex});
-        cellsInGroup = [];
-        groupIndex++;
-    }
-
-    return sudokuGroups;
-}
-
 export default class SudokuComponent extends Component{
     constructor(props){
         super(props);
         this.state = {
-            answerMode:false
+            answerMode:false,
+            sudokuGroups:[]
         };
         this.numeric_only = this.numeric_only.bind(this);
         this.changeAnswerModeHandle = this.changeAnswerModeHandle.bind(this);
@@ -36,13 +15,12 @@ export default class SudokuComponent extends Component{
     componentWillMount () { 
         //this.setState({answerMode:false});
         console.log('componentWillMount@SudokuComponent')
+        this.setState({sudokuGroups:this.getSudokuData(this.props.level)})
     }
 
     //https://infoq.cn/article/2016/07/react-shouldComponentUpdate
     /* 
     shouldComponentUpdate(nextProps,nextState){
-        //写自己的逻辑判断是否需要更新组件
-       
         return true;
     }
     */
@@ -55,16 +33,36 @@ export default class SudokuComponent extends Component{
         this.setState({answerMode:e.target.checked});
     }
 
-    renderSudoku (level, keyrefer) {
-        keyrefer = keyrefer || 1;
+    getSudokuData(level){
     
-        //defaultChecked={this.state.showAnswer} onChange={this.showAnserChangeHandleEvent}
+        let puzzle = sudokukit.getSudokuPuzzle(level).SudokuPuzzle//level is between 2 and 6
+        let sudokuGroups = [];
+       
+        let cellsInGroup = [];
+        let groupIndex = 0;
+        
+        let startIndes = sudokukit.getStartIndesInGrids()
+        for(let gi_index of startIndes){
+            let sindes = sudokukit.getIndexListInGrid(gi_index, startIndes)
+            for(let sindex of sindes){
+                cellsInGroup.push(puzzle[sindex]);
+            }
+            sudokuGroups.push({data:cellsInGroup.slice(0), index:groupIndex});
+            cellsInGroup = [];
+            groupIndex++;
+        }
+    
+        return sudokuGroups;
+    }
+
+    renderSudoku () {
+        
         return(
             <div>
-                <div className='sudokucontainer' key={keyrefer}>
+                <div className='sudokucontainer' >
     
                     { 
-                        getSudokuData(level).map(sg => 
+                        this.state.sudokuGroups .map(sg => 
                         <div  className='sudokugroup' key={sg.index}> 
                             {sg.data.map(sd => 
     
@@ -99,21 +97,9 @@ export default class SudokuComponent extends Component{
                         flex-wrap: wrap;
                         justify-content:space-around;
                         background:#000;
-                        width:342px;
-                        height:342px;
+                        width:348px;
+                        height:345px;
                         margin:20px;
-                    }
-                    .settingbar{
-                        display:flex;
-                        justify-content:center;
-                        margin-top:10px;
-                        
-                    }
-                    .settinglabel{
-                        margin-right:20px;
-                    }
-                    .settinginput{
-                        margin-right:50px;
                     }
                     .sudokugroup{
                         display:flex;
@@ -124,7 +110,7 @@ export default class SudokuComponent extends Component{
                         font-size:32px;
                         width: 111px;
                         height: 111px;
-                        margin-top:2px;
+                        margin-top:3px;
                     }
                     .sudokucell{
                         width:36px;
@@ -149,6 +135,18 @@ export default class SudokuComponent extends Component{
                         font-size:32px;
                         font-family: "黑体","宋体",'Arial',sans-serif;
                     }
+                    .settingbar{
+                        display:flex;
+                        justify-content:center;
+                        margin-top:10px;
+                        
+                    }
+                    .settinglabel{
+                        margin-right:20px;
+                    }
+                    .settinginput{
+                        margin-right:50px;
+                    }
                 `}</style>
             </div>)
     }
@@ -156,10 +154,10 @@ export default class SudokuComponent extends Component{
     render () {
         let sudosuks = []
         console.log('render@SudokuComponent')
-    
+        
         return (
             <div>
-                { this.renderSudoku(this.props.level) }
+                { this.renderSudoku() }
             </div>
         )
     }

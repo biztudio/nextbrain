@@ -7,26 +7,39 @@ export default class Sudoku extends Component{
         super(props);
         this.state = {
             level:3,
-            count:1
+            count:1,
+            sudokuList:[]
         };
         this.levelChangeHandleEvent = this.levelChangeHandleEvent.bind(this);
         this.countChangeHandleEvent = this.countChangeHandleEvent.bind(this);
         this.refreshHandleEvent = this.refreshHandleEvent.bind(this);
     }
 
+    getSudokuList(){
+        console.log('getSudokuList@SudokuPage')
+        this.setState({sudokuList:[]}, ()=>{
+            let sudokuList = [];
+            for(let sindex = 0; sindex < this.state.count; sindex++){
+                sudokuList.push(<SudokuComponent level={this.state.level} key={sindex}/>)
+            }
+            this.setState({sudokuList:sudokuList});
+        });
+    }
+
     levelChangeHandleEvent(event){
-        this.setState({level:event.target.value});//NOTE: this is an async way. We can verify it in following consoles
-        //console.log(event.target.value)
-        //console.log(this.state.level);
+        this.setState({level:event.target.value}, this.getSudokuList());//NOTE: this is an async way. 
     }
 
     countChangeHandleEvent(event){
-        this.setState({count:event.target.value});//NOTE: this is an async way.
+        this.setState({count:event.target.value}, this.getSudokuList());//NOTE: this is an async way.
     }
 
     refreshHandleEvent(event){
-        this.setState({showAnswer:false});
-        this.setState({level:this.state.level});
+        this.setState({level:this.state.level}, this.getSudokuList());
+    }
+
+    componentWillMount () { 
+        this.getSudokuList()
     }
     
     render(){
@@ -35,11 +48,6 @@ export default class Sudoku extends Component{
             groupList.push(<option value={index} key={index}>{index} 组</option>);
         }
         console.log('render@SudokuPage')
-
-        let sudokuList = []
-        for(let sindex = 0; sindex < this.state.count;sindex++){
-            sudokuList.push(<SudokuComponent level={this.state.level} />)
-        }
 
         return ( <Layout title="Nextbrain - 数独">
 
@@ -59,7 +67,7 @@ export default class Sudoku extends Component{
                         <button onClick={this.refreshHandleEvent}>再来一组</button>
                     </div>
                     <div className='sudokupage'>
-                        {sudokuList}
+                        {this.state.sudokuList}
                     </div>
                     <style jsx>{`
                         .sudokupage{
