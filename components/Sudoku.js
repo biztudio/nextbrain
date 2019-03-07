@@ -38,12 +38,18 @@ export default class SudokuComponent extends Component{
         console.log('componentWillMount@SudokuComponent')
     }
 
+    shouldComponentUpdate(nextProps,nextState){
+        //写自己的逻辑判断是否需要更新组件
+        
+        return false;
+    }
+
     numeric_only(e){
         console.log(e)
     }
 
     changeAnswerModeHandle(e){
-        this.setState({answerMode:!this.state.answerMode});
+        this.setState({answerMode:e.target.checked});
     }
 
     renderSudoku (level, keyrefer) {
