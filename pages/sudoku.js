@@ -11,6 +11,7 @@ export default class Sudoku extends Component{
         };
         this.levelChangeHandleEvent = this.levelChangeHandleEvent.bind(this);
         this.countChangeHandleEvent = this.countChangeHandleEvent.bind(this);
+        this.refreshHandleEvent = this.refreshHandleEvent.bind(this);
     }
 
     levelChangeHandleEvent(event){
@@ -22,16 +23,22 @@ export default class Sudoku extends Component{
     countChangeHandleEvent(event){
         this.setState({count:event.target.value});//NOTE: this is an async way.
     }
+
+    refreshHandleEvent(event){
+        this.setState({showAnswer:false});
+        this.setState({level:this.state.level});
+    }
     
     render(){
         let groupList = [];
         for(let index = 1; index <= 12; index++){
             groupList.push(<option value={index} key={index}>{index} 组</option>);
         }
+        console.log('render@SudokuPage')
         return ( <Layout title="Nextbrain - 数独">
 
                     <div className='settingbar'>
-                        <label className='settinglabel' htmlFor = 'level'>难度:  </label>
+                        <label className='settinglabel' htmlFor = 'level'>难度:</label>
                         <select className='settinginput' name='level' value={this.state.level} onChange={this.levelChangeHandleEvent}>
                             <option value="2">入门秒杀</option>
                             <option value="3">日常玩玩</option>
@@ -39,10 +46,11 @@ export default class Sudoku extends Component{
                             <option value="5">琢磨片刻</option>
                             <option value="6">壮胆挑战</option>
                         </select>
-                        <label className='settinglabel' htmlFor = 'sudokucount'>组数</label>
+                        <label className='settinglabel' htmlFor = 'sudokucount'>组数:</label>
                         <select className='settinginput' name='sudokucount' value={this.state.count} onChange={this.countChangeHandleEvent}>
                             { groupList }
                         </select>
+                        <button onClick={this.refreshHandleEvent}>再来一组</button>
                     </div>
 
                     <SudokuComponent level={this.state.level} count={this.state.count} />

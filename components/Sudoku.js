@@ -105,12 +105,21 @@ const renderSudoku = (level, keyrefer) => {
 export default class SudokuComponent extends Component{
     constructor(props){
         super(props);
+        this.state = {
+            answerMode:false
+        };
+    }
+
+    componentWillMount () { 
+        this.setState({answerMode:this.props.showAnswer||false});
+        console.log('componentWillMount@SudokuComponent')
     }
 
     render () {
         let sudosuks = []
         let count = (this.props.count||1);
-        
+        console.log('render@SudokuComponent')
+
         for(let sindex = 0; sindex < count; sindex++)
             sudosuks.push(<div key={sindex}>{renderSudoku(this.props.level, sindex)}</div>);
 
