@@ -23,96 +23,125 @@ const getSudokuData = level => {
     return sudokuGroups;
 }
 
-//
-const renderSudoku = (level, keyrefer) => {
-    keyrefer = keyrefer || 1;
-    return(
-        <div>
-            <div className='sudokucontainer' key={keyrefer}>
-
-                { getSudokuData(level).map(sg => 
-                    <div  className='sudokugroup' key={sg.index}> 
-                        {sg.data.map(sd => 
-
-                            {
-                                if(sd.display > 0){
-                                    return <div className='sudokudisplay' key={sd.index}>{sd.display}</div>
-                                }
-                                else{
-                                    return <div className='sudokudisplay' key={sd.index}>
-                                                <input className='sudokuanswer' autoComplete='off' type='text' maxLength='1'/>
-                                            </div>
-                                }
-                            }
-
-                        )}
-                    </div>) }
-
-            </div>       
-            <style jsx>{`
-                .sudokucontainer{
-                    display:flex;
-                    flex-direction:row;
-                    flex-wrap: wrap;
-                    justify-content:space-around;
-                    background:#000;
-                    width:342px;
-                    height:342px;
-                    margin:10px;
-                }
-                .sudokugroup{
-                    display:flex;
-                    flex-direction:row;
-                    flex-wrap: wrap;
-                    justify-content:space-around;
-                    background:#000;
-                    font-size:32px;
-                    width: 111px;
-                    height: 111px;
-                    margin-top:2px;
-                }
-                .sudokudisplay{
-                    width:36px;
-                    height:36px;
-                    display:flex;
-                    justify-content:center;
-                    background:#E3EDCD;
-                    color:#000
-                }
-                .sudokuanswer{
-                    background:#E3EDCD;
-                    color: purple;
-                    width:26px;
-                    height:34px;
-                    margin-left:8px;
-                    border:0;
-                    font-size:32px;
-                    font-family: "黑体","宋体",'Arial',sans-serif;
-                }
-                .sudokuhint{
-                    width:36px;
-                    height:36px;
-                    display:flex;
-                    justify-content:center;
-                    background:#E3EDCD;
-                    color: gray;
-                }
-            `}</style>
-        </div>)
-};
-
-
 export default class SudokuComponent extends Component{
     constructor(props){
         super(props);
         this.state = {
             answerMode:false
         };
+        this.numeric_only = this.numeric_only.bind(this);
+        this.changeAnswerModeHandle = this.changeAnswerModeHandle.bind(this);
     }
 
     componentWillMount () { 
-        this.setState({answerMode:this.props.showAnswer||false});
+        //this.setState({answerMode:false});
         console.log('componentWillMount@SudokuComponent')
+    }
+
+    numeric_only(e){
+        console.log(e)
+    }
+
+    changeAnswerModeHandle(e){
+        this.setState({answerMode:!this.state.answerMode});
+    }
+
+    renderSudoku (level, keyrefer) {
+        keyrefer = keyrefer || 1;
+    
+        //defaultChecked={this.state.showAnswer} onChange={this.showAnserChangeHandleEvent}
+        return(
+            <div>
+                <div className='sudokucontainer' key={keyrefer}>
+    
+                    { 
+                        getSudokuData(level).map(sg => 
+                        <div  className='sudokugroup' key={sg.index}> 
+                            {sg.data.map(sd => 
+    
+                                {
+                                    if(sd.display > 0){
+                                        return <div className='sudokucell sudokudisplay' key={sd.index}>{sd.display}</div>
+                                    }
+                                    else{
+                                        if(!this.state.answerMode){
+                                            return <div className='sudokucell sudokudisplay' key={sd.index}>
+                                                        <input type="text" onKeyPress={this.numeric_only} className='sudokuanswer' autoComplete='off' maxLength='1'/>
+                                                    </div>
+                                        }
+                                        else{
+                                            return <div className='sudokucell sudokuhint' key={sd.index}>{sd.value}</div>
+                                        }
+                                    }
+                                }
+    
+                            )}
+                        </div>) 
+                    }
+                    <div className='settingbar'>
+                        <label className='settinglabel' htmlFor = 'showAnswer'>显示解答:</label>
+                        <input type='checkbox' className='settinginput' name='showAnswer' defaultChecked={this.state.answerMode} onChange={this.changeAnswerModeHandle} ></input>
+                    </div>   
+                </div>       
+                <style jsx>{`
+                    .sudokucontainer{
+                        display:flex;
+                        flex-direction:row;
+                        flex-wrap: wrap;
+                        justify-content:space-around;
+                        background:#000;
+                        width:342px;
+                        height:342px;
+                        margin:20px;
+                    }
+                    .settingbar{
+                        display:flex;
+                        justify-content:center;
+                        margin-top:10px;
+                        
+                    }
+                    .settinglabel{
+                        margin-right:20px;
+                    }
+                    .settinginput{
+                        margin-right:50px;
+                    }
+                    .sudokugroup{
+                        display:flex;
+                        flex-direction:row;
+                        flex-wrap: wrap;
+                        justify-content:space-around;
+                        background:#000;
+                        font-size:32px;
+                        width: 111px;
+                        height: 111px;
+                        margin-top:2px;
+                    }
+                    .sudokucell{
+                        width:36px;
+                        height:36px;
+                        display:flex;
+                        justify-content:center;
+                        background:#E3EDCD;
+                    }
+                    .sudokudisplay{
+                        color:#000
+                    }
+                    .sudokuhint{
+                        color: gray;
+                    }
+                    .sudokuanswer{
+                        width:26px;
+                        height:34px;
+                        background:#E3EDCD;
+                        color: purple;
+                        margin-left:8px;
+                        border:0;
+                        font-size:32px;
+                        font-family: "黑体","宋体",'Arial',sans-serif;
+                    }
+                `}</style>
+            </div>)
     }
 
     render () {
@@ -121,7 +150,7 @@ export default class SudokuComponent extends Component{
         console.log('render@SudokuComponent')
 
         for(let sindex = 0; sindex < count; sindex++)
-            sudosuks.push(<div key={sindex}>{renderSudoku(this.props.level, sindex)}</div>);
+            sudosuks.push(<div key={sindex}>{this.renderSudoku(this.props.level, sindex)}</div>);
 
         return (
             <div>
