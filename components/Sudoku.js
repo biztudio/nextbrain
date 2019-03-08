@@ -106,10 +106,12 @@ export default class SudokuComponent extends Component{
                 errorMessage = `拜托再检查一下第 ${result.refindex  + 1} 分组块`;
             }
             else if(result.check == 2){
-                errorMessage = `拜托再检查一下第 ${result.refindex  + 1} 行`;
+                let lineIndex = sudokukit.getLineIndex(result.refindex)
+                errorMessage = `拜托再检查一下第 ${lineIndex  + 1} 行`;
             }
             else if(result.check == 3){
-                errorMessage = `拜托再检查一下第 ${result.refindex  + 1} 列`;
+                let colIndex = sudokukit.getColumnIndex(result.refindex)
+                errorMessage = `拜托再检查一下第 ${colIndex  + 1} 列`;
             }
         }
 
