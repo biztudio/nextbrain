@@ -90,7 +90,8 @@ export default{
             let grid_column_index = Math.floor(cell_index_in_line/3);
             let grid_line_index = Math.floor(line_index/3);
             let init_grid_index = 9 * (grid_line_index  * 3) + (grid_column_index) * 3;
-            if(!grid_init_indes.includes(init_grid_index))
+            //if(!grid_init_indes.includes(init_grid_index))
+            if(grid_init_indes.indexOf(init_grid_index) < 0)
                 grid_init_indes.push(init_grid_index)
         }
         return grid_init_indes
@@ -157,7 +158,8 @@ export default{
             let grid_column_index = Math.floor(cell_index_in_line/3);
             let grid_line_index = Math.floor(line_index/3);
             let init_grid_index = 9 * (grid_line_index  * 3) + (grid_column_index) * 3;
-            if(!grid_init_indes.includes(init_grid_index))
+            //if(!grid_init_indes.includes(init_grid_index))
+            if(0 > grid_init_indes.indexOf(init_grid_index))
                 grid_init_indes.push(init_grid_index)
         }
 
@@ -218,7 +220,8 @@ export default{
                     empty_indes.push(sudokuindex)
                 }
             }            
-            let available_digits = grid_template.filter(e => !existed_digits.includes(e))
+            //let available_digits = grid_template.filter(e => !existed_digits.includes(e))
+            let available_digits = grid_template.filter(e => 0 > existed_digits.indexOf(e))
             let value_map = []
             ////console.log(available_digits)
             for(let number of available_digits){
@@ -259,7 +262,8 @@ export default{
                     fill_grid_indes.push(vm.sudokuindex)
                 }
             }
-            let left_vm = value_map.filter(vm => vm.flag == 1 && vm.flag+vm.flag_ref1+vm.flag_ref2 >= 1 && !fill_grid_indes.includes(vm.sudokuindex))
+            let left_vm = value_map.filter(vm => vm.flag == 1 && vm.flag+vm.flag_ref1+vm.flag_ref2 >= 1 && 
+                0 > fill_grid_indes.indexOf(vm.sudokuindex)) 
             if(left_vm){
                 sudoku[left_vm[0].sudokuindex] = left_vm[0].number
             }
