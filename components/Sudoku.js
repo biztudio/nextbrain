@@ -175,6 +175,9 @@ export default class SudokuComponent extends Component{
                         width:348px;
                         height:345px;
                         margin:20px;
+                        
+                        -webkit-print-color-adjust: exact;
+                        print-color-adjust: exact;
                     }
                     .sudokugroup{
                         display:flex;
