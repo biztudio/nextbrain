@@ -54,7 +54,7 @@ export default class Sudoku extends Component{
                         <label className='settinglabel' htmlFor = 'level'>难度:</label>
                         <select className='settinginput' name='level' value={this.state.level} onChange={this.levelChangeHandleEvent}>
                             <option value="2">入门秒杀</option>
-                            <option value="3">日常玩玩</option>
+                            <option value="3">日常提神</option>
                             <option value="4">刻意训练</option>
                             <option value="5">琢磨片刻</option>
                             <option value="6">壮胆挑战</option>

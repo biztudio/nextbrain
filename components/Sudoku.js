@@ -29,6 +29,7 @@ export default class SudokuComponent extends Component{
 
     numeric_only(e){
         
+        this.setState({checkResult:{message:'', result:false}})
         let sudokugroupindex = e.target.getAttribute('data-sudokugroupindex');
         let sudokuindex = e.target.getAttribute('data-sudokuindex');
         let valueAnswer = 0;
@@ -54,10 +55,11 @@ export default class SudokuComponent extends Component{
 
     changeAnswerModeHandle(e){
         this.setState({answerMode:e.target.checked});
+        this.setState({checkResult:{message:'', result:false}})
     }
 
     getSudokuData(level){
-    
+        this.setState({checkResult:{message:'', result:false}})
         let puzzle = sudokukit.getSudokuPuzzle(level).SudokuPuzzle//level is between 2 and 6
         let sudokuGroups = [];
        
@@ -96,9 +98,22 @@ export default class SudokuComponent extends Component{
         }
        
         //console.log(sudokuResult)
-        let validation = sudokukit.checkSudoku(sudokuResult)
-        console.log(validation)
+        let result = sudokukit.checkSudoku(sudokuResult)
+        let errorMessage = ''
+        //console.log(result)
+        if(!result.validation){
+            if(result.check == 1){
+                errorMessage = `拜托再检查一下第 ${result.refindex  + 1} 分组块`;
+            }
+            else if(result.check == 2){
+                errorMessage = `拜托再检查一下第 ${result.refindex  + 1} 行`;
+            }
+            else if(result.check == 3){
+                errorMessage = `拜托再检查一下第 ${result.refindex  + 1} 列`;
+            }
+        }
 
+        this.setState({checkResult:{message:(result.validation?'回答正确:)':errorMessage), result:result.validation}})
     }
 
     renderSudoku () {
@@ -131,11 +146,19 @@ export default class SudokuComponent extends Component{
                             )}
                         </div>) 
                     }
-                    <div className='sudokusettingbar'>
-                        <button  className='sudokusettinginput' onClick={this.checkHandleEvent} disabled={this.state.answerMode}>检查我的答案</button>
-                        <label className='sudokusettinglabel' htmlFor = 'showAnswer'>显示参考答案:</label>
-                        <input type='checkbox' className='sudokusettinginput' name='showAnswer' defaultChecked={this.state.answerMode} onChange={this.changeAnswerModeHandle} ></input>
-                    </div>   
+
+                    <div className='sudokuOpBar'>
+                        <div className='sudokusettingbar'>
+                            <button  className='sudokusettinginput' onClick={this.checkHandleEvent} disabled={this.state.answerMode}>检查我的答案</button>
+                            <label className='sudokusettinglabel' htmlFor = 'showAnswer'>显示参考答案:</label>
+                            <input type='checkbox' className='sudokusettinginput' name='showAnswer' defaultChecked={this.state.answerMode} onChange={this.changeAnswerModeHandle} ></input>
+                           
+                        </div> 
+                        <div>
+                            <label className='sudokuresutlmessage' >{this.state.checkResult.message}</label>
+                        </div>
+                    </div>
+
                 </div>       
                 <style jsx>{`
                     .sudokucontainer{
@@ -182,16 +205,27 @@ export default class SudokuComponent extends Component{
                         font-size:32px;
                         font-family: "黑体","宋体",'Arial',sans-serif;
                     }
+                    .sudokuOpBar{
+                        display:flex;
+                        flex-direction:column;
+                        justify-content:flex-start;
+                        margin-top:10px;
+                    }
                     .sudokusettingbar{
                         display:flex;
                         justify-content:flex-start;
-                        margin-top:10px;
+                        margin-top:3px;
                     }
                     .sudokusettinglabel{
                         margin-right:5px;
                     }
                     .sudokusettinginput{
                         margin-right:50px;
+                    }
+                    .sudokuresutlmessage{
+                        display:flex;
+                        justify-content:center;
+                        margin-top:3px;
                     }
 
                     @media print {
