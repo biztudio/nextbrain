@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 
 const PageHeader = (props) => (
-    <div>
+    <div className='navigationBar'>
 
         <Link href="/">
           <a className="navigationlink">首页</a>
@@ -24,6 +24,13 @@ const PageHeader = (props) => (
                 text-decoration: none;
                 color: orange;
           }
+
+          @media print {
+            .navigationBar {
+                display: none;
+            }
+          }   
+          
         `}
         </style>
     </div>

@@ -90,9 +90,9 @@ export default class SudokuComponent extends Component{
                             )}
                         </div>) 
                     }
-                    <div className='settingbar'>
-                        <label className='settinglabel' htmlFor = 'showAnswer'>显示解答:</label>
-                        <input type='checkbox' className='settinginput' name='showAnswer' defaultChecked={this.state.answerMode} onChange={this.changeAnswerModeHandle} ></input>
+                    <div className='sudokusettingbar'>
+                        <label className='sudokusettinglabel' htmlFor = 'showAnswer'>显示解答:</label>
+                        <input type='checkbox' className='sudokusettinginput' name='showAnswer' defaultChecked={this.state.answerMode} onChange={this.changeAnswerModeHandle} ></input>
                     </div>   
                 </div>       
                 <style jsx>{`
@@ -140,18 +140,23 @@ export default class SudokuComponent extends Component{
                         font-size:32px;
                         font-family: "黑体","宋体",'Arial',sans-serif;
                     }
-                    .settingbar{
+                    .sudokusettingbar{
                         display:flex;
-                        justify-content:center;
+                        justify-content:flex-start;
                         margin-top:10px;
-                        
                     }
-                    .settinglabel{
-                        margin-right:20px;
+                    .sudokusettinglabel{
+                        margin-right:5px;
                     }
-                    .settinginput{
+                    .sudokusettinginput{
                         margin-right:50px;
                     }
+
+                    @media print {
+                        .sudokusettingbar {
+                            display: none;
+                        }
+                    }   
                 `}</style>
             </div>)
     }

@@ -87,6 +87,13 @@ export default class Sudoku extends Component{
                         .settinginput{
                             margin-right:50px;
                         }
+
+                        @media print {
+                            .settingbar {
+                                display: none;
+                            }
+                        }   
+                        
                     `}</style>
 
                 </Layout>);
