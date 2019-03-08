@@ -4,7 +4,7 @@ import GlobalStyle from './GlobalStyle';
 
 const layoutStyle = {
   margin: 20,
-  padding: 50,
+  padding: 20,
   border: '1px solid #FFF'
 }
 

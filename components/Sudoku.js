@@ -119,7 +119,7 @@ export default class SudokuComponent extends Component{
     renderSudoku () {
         
         return(
-            <div>
+            <div className='container'>
                 <div className='sudokucontainer' >
     
                     { 
@@ -161,6 +161,9 @@ export default class SudokuComponent extends Component{
 
                 </div>       
                 <style jsx>{`
+                    .container{
+                        margin-bottom:50px;
+                    }
                     .sudokucontainer{
                         display:flex;
                         flex-direction:row;
