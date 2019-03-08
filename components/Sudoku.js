@@ -234,7 +234,7 @@ export default class SudokuComponent extends Component{
                     }
 
                     @media print {
-                        .sudokusettingbar {
+                        .sudokuOpBar {
                             display: none;
                         }
                     }   
