@@ -6,10 +6,13 @@ export default class SudokuComponent extends Component{
         super(props);
         this.state = {
             answerMode:false,
-            sudokuGroups:[]
+            sudokuGroups:[],
+            sudokuAnswer:[],
+            checkResult:{}
         };
         this.numeric_only = this.numeric_only.bind(this);
         this.changeAnswerModeHandle = this.changeAnswerModeHandle.bind(this);
+        this.checkHandleEvent = this.checkHandleEvent.bind(this);
     }
 
     componentWillMount () { 
@@ -25,12 +28,27 @@ export default class SudokuComponent extends Component{
     */
 
     numeric_only(e){
-        console.log(e.charCode)
-        if(e.charCode >= 49 && e.charCode <= 57){
-            
+        
+        let sudokugroupindex = e.target.getAttribute('data-sudokugroupindex');
+        let sudokuindex = e.target.getAttribute('data-sudokuindex');
+        let valueAnswer = 0;
+        if(e.charCode < 49 || e.charCode > 57){
+            alert('请输入1到9之间的数字');
         }
         else{
-            alert('请输入1到9之间的数字')
+            valueAnswer = e.charCode - 48;
+        }
+
+        for(let gcindex = 0; gcindex < this.state.sudokuAnswer[sudokugroupindex].answer.length; gcindex++){
+                
+            if(this.state.sudokuAnswer[sudokugroupindex].answer[gcindex].index == sudokuindex){
+
+                this.state.sudokuAnswer[sudokugroupindex].answer[gcindex].answer=valueAnswer
+                this.setState({sudokuAnswer:this.state.sudokuAnswer}, ()=>{
+
+                });
+                break;
+            }
         }
     }
 
@@ -56,8 +74,31 @@ export default class SudokuComponent extends Component{
             cellsInGroup = [];
             groupIndex++;
         }
-    
+        
+        this.setState({sudokuAnswer:sudokuGroups.map(g => {
+            return { 
+                answer:g.data.slice(0).map(d => { return {index:d.index, answer:d.display, refer: d.value};}), 
+                index:g.index};})
+            });
+       
         return sudokuGroups;
+    }
+
+    checkHandleEvent(event){
+        
+        let sudokuResult = []
+        let sudokuSize = 81;
+        for(let index = 0; index < sudokuSize; index++) sudokuResult.push(0);
+        for(let groupIndex = 0; groupIndex < this.state.sudokuAnswer.length; groupIndex++){ 
+            for(let giIndex = 0; giIndex < this.state.sudokuAnswer[groupIndex].answer.length; giIndex++){
+                sudokuResult[this.state.sudokuAnswer[groupIndex].answer[giIndex].index] = this.state.sudokuAnswer[groupIndex].answer[giIndex].answer;
+            }
+        }
+       
+        //console.log(sudokuResult)
+        let validation = sudokukit.checkSudoku(sudokuResult)
+        console.log(validation)
+
     }
 
     renderSudoku () {
@@ -78,7 +119,7 @@ export default class SudokuComponent extends Component{
                                     else{
                                         if(!this.state.answerMode){
                                             return <div className='sudokucell sudokudisplay' key={sd.index}>
-                                                        <input type="text" onKeyPress={this.numeric_only} className='sudokuanswer' autoComplete='off' maxLength='1'/>
+                                                        <input type="text" onKeyPress={this.numeric_only} key={sd.index} data-sudokugroupindex={sg.index} data-sudokuindex={sd.index} className='sudokuanswer' autoComplete='off' maxLength='1'/>
                                                     </div>
                                         }
                                         else{
@@ -91,7 +132,8 @@ export default class SudokuComponent extends Component{
                         </div>) 
                     }
                     <div className='sudokusettingbar'>
-                        <label className='sudokusettinglabel' htmlFor = 'showAnswer'>显示解答:</label>
+                        <button  className='sudokusettinginput' onClick={this.checkHandleEvent} disabled={this.state.answerMode}>检查我的答案</button>
+                        <label className='sudokusettinglabel' htmlFor = 'showAnswer'>显示参考答案:</label>
                         <input type='checkbox' className='sudokusettinginput' name='showAnswer' defaultChecked={this.state.answerMode} onChange={this.changeAnswerModeHandle} ></input>
                     </div>   
                 </div>       
