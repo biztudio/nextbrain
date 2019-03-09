@@ -1,6 +1,6 @@
 const config = {
   projectName: 'nextbrain',
-  date: '2019-3-5',
+  date: '2019-3-9',
   designWidth: 750,
   deviceRatio: {
     '640': 2.34 / 2,
