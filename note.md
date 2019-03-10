@@ -2,7 +2,7 @@ Note
 ===
 
 Items:
-* [24 points in Pokecard](https://zh.wikipedia.org/wiki/24点)
+* [24 points in Pokecard](https://baike.baidu.com/item/24%E7%82%B9/6433670)
 * Sudoku
 * Number Hua Rong Dao
 * Schulte Grid
