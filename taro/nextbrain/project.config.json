@@ -1,7 +1,7 @@
 {
   "miniprogramRoot": "./dist",
   "projectname": "nextbrain",
-  "description": "Nextbrain: 良好的专注力与思维来自于科学的训练.",
+  "description": "nextbrain",
   "appid": "touristappid",
   "setting": {
     "urlCheck": true,
