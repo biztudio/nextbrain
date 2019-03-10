@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "dev": "next",
     "build": "next build",
     "now-build": "next build",
@@ -27,5 +27,13 @@
     "react-dom": "^16.8.3",
     "react-markdown": "^4.0.6"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-jest": "^24.3.1",
+    "babel-preset-env": "^1.7.0",
+    "jest": "^24.3.1"
+  },
+  "jest": {
+    "verbose": true
+  }
 }
