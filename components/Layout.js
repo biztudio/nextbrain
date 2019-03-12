@@ -8,17 +8,39 @@ const layoutStyle = {
   border: '1px solid #FFF'
 }
 
+const layoutStyleCopyright = {
+  display:'flex',
+  width:'98%',
+  justifyContent:'flex-end',
+  fontSize: 12
+}
+
+const date = new Date();
+
 const Layout = (props) => (
-  <div style={layoutStyle}>
-
+  <div className='nextbrainlayout'>
     <DocHead title={props.title}/>
+    <div style={layoutStyle}>
 
-    <PageHeader  />
+      <PageHeader />
 
-    {props.children}
+      {props.children}
+      
     
-   
+    </div>
+
+    <div style={layoutStyleCopyright}>
+      ©2018, {date.getFullYear()} Biztudio.
+    </div>
+
     <GlobalStyle />
+
+    <style jsx>{`
+      .nextbrainlayout{
+        display:flex;
+        flex-direction:column;
+      }
+    `}</style>  
   </div>
 )
 
