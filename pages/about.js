@@ -7,9 +7,13 @@ export default () => (
     <Layout title="关于 Nextbrain">
 
         <div className='logobox'>
+           
             <div>
-                <img src='../static/logo_work002.png' />
+                <a href="https://biztudio.github.io" target='blank'>
+                    <img src='../static/logo_work002.png' />
+                </a>
             </div>
+            
             <div>
                 基于敏捷的学习与实践工坊
             </div>
