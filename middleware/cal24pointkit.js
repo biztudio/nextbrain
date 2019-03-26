@@ -32,6 +32,8 @@ const recursive2Parts = (digits, targetNumber, steps_stack) => {
                     }
                 }
 
+                if(restDigits.length == 1) console.log(`restDigits: ${restDigits}`)
+
                 let calculatedIndex = -1;
                 let opFlag = 1;
                 if(!checkResult){
@@ -147,14 +149,11 @@ export default{
         if(validation.valid && steps_stack){
             
             for(let stepIndex = steps_stack.length - 1; stepIndex >= 0; stepIndex--){
-                //console.log(steps_stack[stepIndex])
+                
                 let step = steps_stack[stepIndex];
                 let opString = step.op == 1? '+' : (step.op == 2? '-': (step.op == 3? 'x':'/'))
                 if(!step.containCalculatedDigit){
-                    if(step.op < 3){
-                        solution += `${step.digit1} ${opString} ${step.digit2}`; 
-                    }
-                    
+                    solution += `${step.digit1} ${opString} ${step.digit2}`; 
                 }
                 else{
                     solution = `${step.digit1} ${opString} ${solution}`;

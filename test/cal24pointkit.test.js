@@ -2,6 +2,15 @@ import checker4Digits from '../middleware/cal24pointkit';
 
 describe('Test verification fucntion', () => {
 
+    test('[1,3,4,6] => true: 6 / (1 - 3/4) = 24', () => {
+
+        let digits =  [1,3,4,6];
+        let result = checker4Digits.determine4DigitsMeet24Point(digits);
+        console.log(result)
+        expect(result.valid).toBeTruthy();
+    });
+
+    
     test('[1, 5, 7, 9] => true: (9-5) * (7-1) = 24', () => {
         let digits =  [1, 5, 7, 9];
         let result = checker4Digits.determine4DigitsMeet24Point(digits);
@@ -19,17 +28,7 @@ describe('Test verification fucntion', () => {
         expect(result.valid).toBeTruthy();
     });
 
-
-    test('[1,3,4,6] => true: 6 / (1 - 3/4) = 24', () => {
-
-        let digits =  [1,3,4,6];
-        let result = checker4Digits.determine4DigitsMeet24Point(digits);
-        console.log(result)
-        expect(result.valid).toBeTruthy();
-    });
-
-    
-
+   
     test('[1,2,3,4] => true: 1 x 2 x 3 x 4 = 24', () => {
 
         let digits =  [1,2,3,4];
