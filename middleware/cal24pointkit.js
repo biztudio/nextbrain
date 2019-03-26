@@ -10,7 +10,7 @@ const patterns = [
 
 const EXPECT_RESULT = 24;
 
-const recursive2Parts = (digits, targetNumber) => {
+const recursive2Parts = (digits, targetNumber, steps_stack) => {
         
     let checkResult = false;
     let currentSolution = {};
@@ -32,69 +32,78 @@ const recursive2Parts = (digits, targetNumber) => {
                     }
                 }
 
+                let calculatedIndex = -1;
+                let opFlag = 1;
                 if(!checkResult){
                     restDigits.push((curDigit1 + curDigit2));
-                    checkResult = checkResult || recursive2Parts(restDigits.slice(0), targetNumber).valid;
-                    restDigits.pop();
-
+                    checkResult = checkResult || recursive2Parts(restDigits.slice(0), targetNumber, steps_stack).valid;
                     if(checkResult){
-                        currentSolution = ({digit1:curDigit1, digit2:curDigit2, op:1});
+                        currentSolution = ({digit1:curDigit1, digit2:curDigit2, op: opFlag, containCalculatedDigit:(index2 == digits.length - 1)});
+                        steps_stack.push(currentSolution);
                     }
+                    restDigits.pop();
                 }
         
                 if(!checkResult){
                     restDigits.push((curDigit1 * curDigit2));
-                    checkResult = checkResult || recursive2Parts(restDigits.slice(0), targetNumber).valid;
-                    restDigits.pop();
-
+                    checkResult = checkResult || recursive2Parts(restDigits.slice(0), targetNumber, steps_stack).valid;
+                    opFlag = 3;
                     if(checkResult){
-                        currentSolution = ({digit1:curDigit1, digit2:curDigit2, op:3});
+                        currentSolution = ({digit1:curDigit1, digit2:curDigit2, op: opFlag, containCalculatedDigit:(index2 == digits.length - 1)});
+                        steps_stack.push(currentSolution);
                     }
+                    restDigits.pop();
                 }
         
                 if(!checkResult){
                     restDigits.push((curDigit1 - curDigit2));
-                    checkResult = checkResult || recursive2Parts(restDigits.slice(0), targetNumber).valid;
-                    restDigits.pop();
-
+                    checkResult = checkResult || recursive2Parts(restDigits.slice(0), targetNumber, steps_stack).valid;
+                    opFlag = 2;
                     if(checkResult){
-                        currentSolution = ({digit1:curDigit1, digit2:curDigit2, op:2});
+                        currentSolution = ({digit1:curDigit1, digit2:curDigit2, op: opFlag, containCalculatedDigit:(index2 == digits.length - 1)});
+                        steps_stack.push(currentSolution);
                     }
+                    restDigits.pop();
                 }
         
                 if(!checkResult){
                     restDigits.push((curDigit2 - curDigit1));
-                    checkResult = checkResult || recursive2Parts(restDigits.slice(0), targetNumber).valid;
-                    restDigits.pop();
-
+                    checkResult = checkResult || recursive2Parts(restDigits.slice(0), targetNumber, steps_stack).valid;
+                    opFlag = 2;
                     if(checkResult){
-                        currentSolution = ({digit1:curDigit2, digit2:curDigit1, op:2});
+                        currentSolution = ({digit1:curDigit1, digit2:curDigit2, op: opFlag, containCalculatedDigit:(index2 == digits.length - 1)});
+                        steps_stack.push(currentSolution);
                     }
+                    restDigits.pop();
                 }
         
                 if(!checkResult && curDigit2 != 0){
                     restDigits.push(math.fraction(curDigit1 / curDigit2));
-                    checkResult = checkResult || recursive2Parts(restDigits.slice(0), targetNumber).valid;
-                    restDigits.pop();
-
-
+                    checkResult = checkResult || recursive2Parts(restDigits.slice(0), targetNumber, steps_stack).valid;
+                    opFlag = 4;
                     if(checkResult){
-                        currentSolution = ({digit1:curDigit1, digit2:curDigit2, op:4});
+                        currentSolution = ({digit1:curDigit1, digit2:curDigit2, op: opFlag, containCalculatedDigit:(index2 == digits.length - 1)});
+                        steps_stack.push(currentSolution);
                     }
+                    restDigits.pop();
                 }
         
                 if(!checkResult && curDigit1 != 0){
                     restDigits.push(math.fraction(curDigit2 / curDigit1));
-                    checkResult = checkResult || recursive2Parts(restDigits.slice(0), targetNumber).valid;
-                    restDigits.pop();
-
+                    checkResult = checkResult || recursive2Parts(restDigits.slice(0), targetNumber, steps_stack).valid;
+                    opFlag = 4;
                     if(checkResult){
-                        currentSolution = ({digit1:curDigit2, digit2:curDigit1, op:4});
+                        currentSolution = ({digit1:curDigit1, digit2:curDigit2, op: opFlag, containCalculatedDigit:(index2 == digits.length - 1)});
+                        steps_stack.push(currentSolution);
                     }
+                    restDigits.pop();
                 }
 
             }
         }
+
+        //if(checkResult) console.log(currentSolution);
+
     }
     
     return {
@@ -117,19 +126,53 @@ export default{
 
         let calresult = 0;
         calresult = digits.reduce((total, n) => total+n);
-        if(EXPECT_RESULT == calresult) return true;
+        if(EXPECT_RESULT == calresult) return {
+            valid: true,
+            solution: digits.reduce((totalCal, n) => totalCal + ' + ' + n)
+        };
 
         calresult = 0;
         calresult = digits.reduce((total, n) => total*n);
-        if(EXPECT_RESULT == calresult) return true;
+        if(EXPECT_RESULT == calresult) return {
+            valid: true,
+            solution: digits.reduce((totalCal, n) => totalCal + ' x ' + n)
+        };
 
         calresult = 0;
         let checkFlag = false;
-        let validation = recursive2Parts(digits, EXPECT_RESULT);
-        checkFlag = checkFlag || validation.valid;
-        if(checkFlag) console.log(validation.solution)
+        let steps_stack = [];
+        let validation = recursive2Parts(digits, EXPECT_RESULT, steps_stack);
+        
+        let solution = '';
+        if(validation.valid && steps_stack){
+            
+            for(let stepIndex = steps_stack.length - 1; stepIndex >= 0; stepIndex--){
+                //console.log(steps_stack[stepIndex])
+                let step = steps_stack[stepIndex];
+                let opString = step.op == 1? '+' : (step.op == 2? '-': (step.op == 3? 'x':'/'))
+                if(!step.containCalculatedDigit){
+                    if(step.op < 3){
+                        solution += `${step.digit1} ${opString} ${step.digit2}`; 
+                    }
+                    
+                }
+                else{
+                    solution = `${step.digit1} ${opString} ${solution}`;
+                }
 
-        return checkFlag;
+                if(step.op < 3 && stepIndex > 0){
+                    solution = `(${solution})`;
+                }
+
+            }
+        }
+
+        console.log(steps_stack)
+
+        return {
+            valid: validation.valid,
+            solution: solution
+        };
     }
 }
 
