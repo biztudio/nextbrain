@@ -1,20 +1,13 @@
 import mathkit from './mathkit';
 import * as math from 'mathjs';
 
-const patterns = [
-    'heart',//红桃
-    'spade',//黑桃
-    'club', //梅花
-    'diamond'//方片
-];
-
 const EXPECT_RESULT = 24;
 
 const expandSolution = (stepIndex, stepStack) =>{
     
     let step = stepStack[stepIndex];
       
-    let opString = step.op == 1? '+' : (step.op == 2? '-': (step.op == 3? 'x':'/'));
+    let opString = step.op == 1? '+' : (step.op == 2? '-': (step.op == 3? 'x':'÷'));
     let stepString = '';           
     if(step.digit1.iscalculated && step.digit2.iscalculated){
         stepString = expandSolution( stepIndex + 2,stepStack) + ` ${opString} ` + expandSolution(stepIndex + 1,stepStack);
@@ -78,7 +71,7 @@ const recursive2Parts = (digits, targetNumber, steps_stack) => {
                     checkResult = checkResult || recursive2Parts(restDigits.slice(0), targetNumber, steps_stack).valid;
                     opFlag = 3;
                     if(checkResult){
-                        opString = '*';
+                        opString = 'x';
                         currentSolution = ({digit1:curDigit1, digit2:curDigit2, op: opFlag, containCalculatedDigit:(curDigit1.iscalculated || curDigit2.iscalculated),
                             stepString: `${exp1} ${opString} ${exp2}`
                         });
@@ -120,7 +113,7 @@ const recursive2Parts = (digits, targetNumber, steps_stack) => {
                     checkResult = checkResult || recursive2Parts(restDigits.slice(0), targetNumber, steps_stack).valid;
                     opFlag = 4;
                     if(checkResult){
-                        opString = '/';
+                        opString = '÷';
                         currentSolution = ({digit1:curDigit1, digit2:curDigit2, op: opFlag, containCalculatedDigit:(curDigit1.iscalculated || curDigit2.iscalculated),
                             stepString: `${exp1} ${opString} ${exp2}`
                         });
@@ -134,7 +127,7 @@ const recursive2Parts = (digits, targetNumber, steps_stack) => {
                     checkResult = checkResult || recursive2Parts(restDigits.slice(0), targetNumber, steps_stack).valid;
                     opFlag = 4;
                     if(checkResult){
-                        opString = '/';
+                        opString = '÷';
                         currentSolution = ({digit1:curDigit1, digit2:curDigit2, op: opFlag, containCalculatedDigit:(curDigit1.iscalculated || curDigit2.iscalculated),
                             stepString: `${exp2} ${opString} ${exp1}`
                         });
