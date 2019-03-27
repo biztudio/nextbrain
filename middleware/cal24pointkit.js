@@ -14,11 +14,10 @@ const expandSolution = (stepIndex, stepStack) =>{
     
     let step = stepStack[stepIndex];
       
-    let opString = step.op == 1? '+' : (step.op == 2? '-': (step.op == 3? 'x':'/'))
-    let stepString = ''           
+    let opString = step.op == 1? '+' : (step.op == 2? '-': (step.op == 3? 'x':'/'));
+    let stepString = '';           
     if(step.digit1.iscalculated && step.digit2.iscalculated){
-        let rxp1 = expandSolution( stepIndex + 2,stepStack);
-        stepString = `${rxp1} ${opString} ` + expandSolution(stepIndex + 1,stepStack)
+        stepString = expandSolution( stepIndex + 2,stepStack) + ` ${opString} ` + expandSolution(stepIndex + 1,stepStack);
     }
     else if(step.digit1.iscalculated && !step.digit2.iscalculated){
         stepString = expandSolution(stepIndex + 1,stepStack)  + ' ' + step.stepString;
@@ -30,9 +29,10 @@ const expandSolution = (stepIndex, stepStack) =>{
         stepString = step.stepString;
     }
 
-    if(step.op < 3) stepString = '(' + stepString + ')';
+    if(step.op < 3 && stepIndex > 0) stepString = '(' + stepString + ')';
+
     return stepString;
-}
+};
 
 const recursive2Parts = (digits, targetNumber, steps_stack) => {
         
@@ -108,7 +108,7 @@ const recursive2Parts = (digits, targetNumber, steps_stack) => {
                     if(checkResult){
                         opString = '-';
                         currentSolution = ({digit1:curDigit1, digit2:curDigit2, op: opFlag, containCalculatedDigit:(curDigit1.iscalculated || curDigit2.iscalculated),
-                            stepString: `${exp1} ${opString} ${exp2}`
+                            stepString: `${exp2} ${opString} ${exp1}`
                         });
                         steps_stack.push(currentSolution);
                     }
@@ -136,7 +136,7 @@ const recursive2Parts = (digits, targetNumber, steps_stack) => {
                     if(checkResult){
                         opString = '/';
                         currentSolution = ({digit1:curDigit1, digit2:curDigit2, op: opFlag, containCalculatedDigit:(curDigit1.iscalculated || curDigit2.iscalculated),
-                            stepString: `${exp1} ${opString} ${exp2}`
+                            stepString: `${exp2} ${opString} ${exp1}`
                         });
                         steps_stack.push(currentSolution);
                     }
@@ -145,9 +145,6 @@ const recursive2Parts = (digits, targetNumber, steps_stack) => {
 
             }
         }
-
-        //if(checkResult) console.log(currentSolution);
-
     }
     
     return {
@@ -166,7 +163,7 @@ export default{
     },
 
     determine4DigitsMeet24Point(digits){
-        if(!digits || digits.length < 1) return false;
+        if(!digits || digits.length > 4) return { valid: false, solution: ''};
 
         let calresult = 0;
         calresult = digits.reduce((total, n) => total+n);
@@ -187,21 +184,12 @@ export default{
         let steps_stack = [];
         let validation = recursive2Parts(digits.map(d => {return {iscalculated:false, value:d};}), EXPECT_RESULT, steps_stack);
         
-        let solution = '';
-        if(validation.valid && steps_stack){
-            
-           solution = expandSolution(0, steps_stack);
-        }
-
-        //console.log(steps_stack);
-        console.log(`solution: ${solution}`);
-
         return {
             valid: validation.valid,
-            solution: solution
+            solution: (validation.valid)?expandSolution(0, steps_stack):''
         };
     }
-}
+};
 
 //Refer 
 //https://blog.csdn.net/qq_40938169/article/details/82453743
