@@ -13,16 +13,16 @@ const expandSolution = (stepIndex, stepStack) =>{
         stepString = expandSolution( stepIndex + 2,stepStack) + ` ${opString} ` + expandSolution(stepIndex + 1,stepStack);
     }
     else if(step.digit1.iscalculated && !step.digit2.iscalculated){
-        stepString = expandSolution(stepIndex + 1,stepStack)  + ' ' + step.stepString;
+        stepString = expandSolution(stepIndex + 1,stepStack) + step.stepString;
     }
     else if(step.digit2.iscalculated && !step.digit1.iscalculated){
-        stepString = step.stepString + ' ' + expandSolution(stepIndex + 1,stepStack);
+        stepString = step.stepString + expandSolution(stepIndex + 1,stepStack);
     }
     else if(!step.digit1.iscalculated && !step.digit2.iscalculated){
         stepString = step.stepString;
     }
 
-    if(step.op < 3 && stepIndex > 0) stepString = '(' + stepString + ')';
+    if( stepIndex > 0) stepString = '(' + stepString + ')';
 
     return stepString;
 };
@@ -147,7 +147,7 @@ const recursive2Parts = (digits, targetNumber, steps_stack) => {
 };
 
 export default{
-    getPuzzle(level){//level between 2 and 5?
+    getPuzzle(level){//level between 2 and 4?
         let puzzle = {puzzleNumbers:[]};
         for(let i = 0; i < level; i++){
             
@@ -179,7 +179,8 @@ export default{
         
         return {
             valid: validation.valid,
-            solution: (validation.valid)?expandSolution(0, steps_stack):''
+            solution: (validation.valid)?expandSolution(0, steps_stack):'',
+            debug_stack: steps_stack
         };
     }
 };

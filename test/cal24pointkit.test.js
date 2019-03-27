@@ -76,8 +76,40 @@ describe('Test verification fucntion', () => {
         expect(result.valid).toBeTruthy();
     });
 
-    test('[3,8] => true: 3 * 8 = 24', () => {
+    test('[3,8] => true: 3 x 8 = 24', () => {
         let digits =  [3,8];
+        let result = checker4Digits.determine4DigitsMeet24Point(digits);
+        if(result.valid) console.log(result.solution);
+        expect(result.valid).toBeTruthy();
+    });
+
+    test('[1,3,8] => true: 1 x 3 x 8 = 24', () => {
+        let digits =  [1, 3,8];
+        let result = checker4Digits.determine4DigitsMeet24Point(digits);
+        if(result.valid) console.log(result.solution);
+        expect(result.valid).toBeTruthy();
+    });
+
+    test('[1,2,8] => true: (1 + 2) x 8 = 24', () => {
+        let digits =  [1, 2,8];
+        let result = checker4Digits.determine4DigitsMeet24Point(digits);
+        if(result.valid) console.log(result.solution);
+        expect(result.valid).toBeTruthy();
+    });
+
+    test('[2,6, 8] => true: 6 x 8 ÷ 2 = 24', () => {
+        let digits =  [2,6,8];
+        let result = checker4Digits.determine4DigitsMeet24Point(digits);
+        if(result.valid) {
+            //console.log(result.debug_stack)
+            console.log(result.solution);
+        }
+
+        expect(result.valid).toBeTruthy();
+    });
+
+    test('[1,2,6, 8] => true: 6 x 8 ÷ 2 = 24', () => {
+        let digits =  [1,2,6,8];
         let result = checker4Digits.determine4DigitsMeet24Point(digits);
         if(result.valid) console.log(result.solution);
         expect(result.valid).toBeTruthy();
