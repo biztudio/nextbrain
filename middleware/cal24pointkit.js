@@ -13,7 +13,7 @@ const expandSolution = (stepIndex, stepStack) =>{
         stepString = expandSolution( stepIndex + 2,stepStack) + ` ${opString} ` + expandSolution(stepIndex + 1,stepStack);
     }
     else if(step.digit1.iscalculated && !step.digit2.iscalculated){
-        stepString = expandSolution(stepIndex + 1,stepStack) + step.stepString;
+        stepString = expandSolution(stepIndex + 1,stepStack) + ` ${opString} ` + step.stepString;
     }
     else if(step.digit2.iscalculated && !step.digit1.iscalculated){
         stepString = step.stepString + expandSolution(stepIndex + 1,stepStack);
@@ -147,11 +147,26 @@ const recursive2Parts = (digits, targetNumber, steps_stack) => {
 };
 
 export default{
-    getPuzzle(level){//level between 2 and 4?
-        let puzzle = {puzzleNumbers:[]};
-        for(let i = 0; i < level; i++){
-            
+    getPuzzle(count = 1){
+        let puzzle = {puzzleNumbers:[], referSolution:''};
+        
+        let source = [1,2,3,4,5,6,7,8,9];
+        let digitCount = 4;
+        let retryTimes = 4;
+
+        for(let retry = 0; retry < retryTimes; retry++)
+        {
+            puzzle.puzzleNumbers = [];
+            for(let di = 0; di < digitCount; di++){
+                puzzle.puzzleNumbers.push(source[mathkit.get_random_number_index()]);
+            }
+            let verify = this.determine4DigitsMeet24Point(puzzle.puzzleNumbers);
+            if(verify.valid){
+                puzzle.referSolution = verify.solution;
+                break;
+            }
         }
+        
         return puzzle;
     },
 
