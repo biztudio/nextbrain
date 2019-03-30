@@ -15,10 +15,13 @@ describe('Test verification fucntion', () => {
 
         let digits =  [3,7,5,3];
         let result = cal24PointKit.determine4DigitsMeet24Point(digits);
-        if(result.valid) console.log(result.solution);
+        if(result.valid) {
+            console.log(result.solution);
+            //console.log(result.debug_stack);
+        }
         expect(result.valid).toBeTruthy();
     });
-
+    //return;
     
     test('[1, 5, 7, 9] => true: (9-5) * (7-1) = 24', () => {
         let digits =  [1, 5, 7, 9];
@@ -124,19 +127,18 @@ describe('Test verification fucntion', () => {
         expect(result.valid).toBeTruthy();
     });
 
-    return;
     
 });
 
 
-describe('Test generator fucntion', () => {
+describe('Test generator function', () => {
 
     test('test is the puzzle has 4 digits', () => {
        
         let result = cal24PointKit.getPuzzle();
-        console.log(result)
+        console.log(result);
         expect(result.puzzleNumbers.length).toBe(4);
-    })
+    });
 
 });
 /**/

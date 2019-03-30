@@ -3,20 +3,25 @@ import * as math from 'mathjs';
 
 const EXPECT_RESULT = 24;
 
-const expandSolution = (stepIndex, stepStack) =>{
+const expandSolution = (stepIndex, stepStack, lastOperation) =>{
     
     let step = stepStack[stepIndex];
       
     let opString = step.op == 1? '+' : (step.op == 2? '-': (step.op == 3? 'x':'÷'));
     let stepString = '';           
     if(step.digit1.iscalculated && step.digit2.iscalculated){
-        stepString = expandSolution( stepIndex + 2,stepStack) + ` ${opString} ` + expandSolution(stepIndex + 1,stepStack);
+        stepString = expandSolution( stepIndex + 2, stepStack, step.op) + ` ${opString} ` + expandSolution(stepIndex + 1, stepStack, step.op);
     }
     else if(step.digit1.iscalculated && !step.digit2.iscalculated){
-        stepString = expandSolution(stepIndex + 1,stepStack) + ` ${opString} ` + step.stepString;
+        stepString = expandSolution(stepIndex + 1, stepStack, step.op) + ` ${opString} ` + step.stepString;
     }
     else if(step.digit2.iscalculated && !step.digit1.iscalculated){
-        stepString = step.stepString + expandSolution(stepIndex + 1,stepStack);
+        stepString = step.stepString + expandSolution(stepIndex + 1, stepStack, step.op);
+        
+        if(step.op == 2 && step.stepString.indexOf('-') >= 0 && step.stepString.indexOf('-') < 2){
+            //stepString = step.stepString + ' + ' + expandSolution(stepIndex + 1, stepStack, step.op);
+            stepString = expandSolution(stepIndex + 1, stepStack, step.op) + ' -' + step.stepString.replace('-','');
+        }
     }
     else if(!step.digit1.iscalculated && !step.digit2.iscalculated){
         stepString = step.stepString;
@@ -53,6 +58,7 @@ const recursive2Parts = (digits, targetNumber, steps_stack) => {
                 let opString = '';
                 let exp1 = curDigit1.iscalculated?'':curDigit1.value;
                 let exp2 = curDigit2.iscalculated?'':curDigit2.value;
+                let stepExpression = '';
                 if(!checkResult){
                     restDigits.push({iscalculated:true, value:(curDigit1.value + curDigit2.value)});
                     checkResult = checkResult || recursive2Parts(restDigits.slice(0), targetNumber, steps_stack).valid;
@@ -79,15 +85,16 @@ const recursive2Parts = (digits, targetNumber, steps_stack) => {
                     }
                     restDigits.pop();
                 }
-        
+                
                 if(!checkResult){
                     restDigits.push({iscalculated:true, value:(curDigit1.value - curDigit2.value)});
                     checkResult = checkResult || recursive2Parts(restDigits.slice(0), targetNumber, steps_stack).valid;
                     opFlag = 2;
                     if(checkResult){
                         opString = '-';
+                        stepExpression = `${exp1} ${opString} ${exp2}`;
                         currentSolution = ({digit1:curDigit1, digit2:curDigit2, op: opFlag, containCalculatedDigit:(curDigit1.iscalculated || curDigit2.iscalculated),
-                            stepString: `${exp1} ${opString} ${exp2}`
+                            stepString: stepExpression
                         });
                         steps_stack.push(currentSolution);
                     }
@@ -100,8 +107,9 @@ const recursive2Parts = (digits, targetNumber, steps_stack) => {
                     opFlag = 2;
                     if(checkResult){
                         opString = '-';
+                        stepExpression = `${exp2} ${opString} ${exp1}`;
                         currentSolution = ({digit1:curDigit1, digit2:curDigit2, op: opFlag, containCalculatedDigit:(curDigit1.iscalculated || curDigit2.iscalculated),
-                            stepString: `${exp2} ${opString} ${exp1}`
+                            stepString: stepExpression
                         });
                         steps_stack.push(currentSolution);
                     }
