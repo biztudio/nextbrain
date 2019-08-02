@@ -10,6 +10,9 @@ const PageHeader = (props) => (
         <Link href="/sudoku">
           <a className="navigationlink">数独</a>
         </Link>
+        <Link href="/ukuscore">
+          <a className="navigationlink">Ukulele</a>
+        </Link>
         <Link href="/about">
           <a className="navigationlink">关于</a>
         </Link>
