@@ -58,7 +58,7 @@ class Ukuframe extends Component{
             }
             <style jsx>{`
                 .ukuframe{
-                    width:99%;
+                    width:300px;
                     margin-bottom:20px;
                     display:flex;
                     flex-direction:column;
@@ -75,7 +75,7 @@ class Ukuframe extends Component{
 
                 .scoregrid{
                     width: 60px;
-                    height: 50px;
+                    height: 30px;
                     margin-right:2px;
                     display: flex;
                     justify-content: center;
@@ -89,7 +89,7 @@ class Ukuframe extends Component{
 
                 .scoregridNote{
                     padding-top: 10px;
-                    background: linear-gradient(#fff 48%,#6190E8 0,#6190E8 52%,#fff 0);
+                    background: linear-gradient(#fff 49%,#D8D8D8 0,#D8D8D8 52%,#fff 0);
                     background-color: #fff;
                 }
 
