@@ -208,7 +208,7 @@ export default class SudokuComponent extends Component{
                         height:34px;
                         background:#E3EDCD;
                         color: purple;
-                        margin-left:8px;
+                        margin-left:6px;
                         border:0;
                         font-size:32px;
                         font-family: "黑体","宋体",'Arial',sans-serif;
